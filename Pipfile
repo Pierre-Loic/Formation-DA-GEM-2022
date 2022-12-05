@@ -11,6 +11,11 @@ sklearn = "*"
 requests = "*"
 geopy = "*"
 seaborn = "*"
+scipy = "*"
+folium = "*"
+geopandas = "*"
+pygeos = "*"
+rtree = "*"
 
 [dev-packages]
 
