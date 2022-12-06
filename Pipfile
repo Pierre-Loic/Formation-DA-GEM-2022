@@ -16,6 +16,9 @@ folium = "*"
 geopandas = "*"
 pygeos = "*"
 rtree = "*"
+lxml = "*"
+openpyxl = "*"
+sqlalchemy = "*"
 
 [dev-packages]
 
