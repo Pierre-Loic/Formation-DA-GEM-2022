@@ -14,7 +14,9 @@ def get_dvf_data(year: str = "2022", department: str = "38") -> pd.DataFrame:
         Returns:
                 df (pandas.DataFrame): dataframe des données immobilières
     """
-    # A COMPLETER
+    url = f"https://files.data.gouv.fr/geo-dvf/latest/csv/{year}/departements/{department}.csv.gz"
+    df = pd.read_csv(url, compression="gzip")
+    return df
 
 def select_columns(house_dataframe: pd.DataFrame, selected_columns: tuple[str]) -> pd.DataFrame:
     """
@@ -25,7 +27,8 @@ def select_columns(house_dataframe: pd.DataFrame, selected_columns: tuple[str]) 
         Returns:
                 df (pandas.DataFrame): dataframe des données immobilières traitées
     """
-    # A COMPLETER
+    df = house_dataframe.copy()
+    return df.loc[:,selected_columns]
 
 def select_type(house_dataframe: pd.DataFrame, house_types: tuple[str]) -> pd.DataFrame:
     """
@@ -36,7 +39,8 @@ def select_type(house_dataframe: pd.DataFrame, house_types: tuple[str]) -> pd.Da
         Returns:
                 df (pandas.DataFrame): dataframe des données immobilières traitées
     """
-    # A COMPLETER
+    df = house_dataframe.copy()
+    return df[df["type_local"].isin(house_types)]
 
 def select_sales(house_dataframe: pd.DataFrame) -> pd.DataFrame:
     """
@@ -46,7 +50,8 @@ def select_sales(house_dataframe: pd.DataFrame) -> pd.DataFrame:
         Returns:
                 df (pandas.DataFrame): dataframe des données immobilières traitées
     """
-    # A COMPLETER
+    df = house_dataframe.copy()
+    return df[df["nature_mutation"]=="Vente"]
 
 def drop_na(house_dataframe: pd.DataFrame) -> pd.DataFrame:
     """
@@ -56,7 +61,9 @@ def drop_na(house_dataframe: pd.DataFrame) -> pd.DataFrame:
         Returns:
                 df (pandas.DataFrame): dataframe des données immobilières traitées
     """
-    # A COMPLETER
+    df = house_dataframe.copy()
+    print(f"Nombre de lignes supprimées : {df.shape[0]-df.dropna().shape[0]}")
+    return df.dropna()
 
 def check_na(house_dataframe: pd.DataFrame) -> None:
     """
@@ -66,7 +73,14 @@ def check_na(house_dataframe: pd.DataFrame) -> None:
         Returns:
                 None
     """
-    # A COMPLETER
+    df = house_dataframe.copy()
+    if df.isna().sum().sum()==0:
+        print("Il n'y a pas de données manquantes dans le dataframe")
+    else:
+        print("Nombre de données manquantes par colonne :")
+        print(df.isna().sum())
+        sns.heatmap(df.isna(), cbar=False)
+        plt.show()
         
 def split_datetime(house_dataframe: pd.DataFrame) -> None:
     """
@@ -77,7 +91,11 @@ def split_datetime(house_dataframe: pd.DataFrame) -> None:
         Returns:
                 df (pandas.DataFrame): dataframe des données immobilières traitées
     """
-    # A COMPLETER
+    df = house_dataframe.copy()
+    df["date_mutation"] = pd.to_datetime(df["date_mutation"])
+    df["jour_semaine"] = df["date_mutation"].dt.dayofweek
+    df["jours_depuis_achat"] = (pd.Timestamp.now()-df["date_mutation"]).dt.days
+    return df
 
 def drop_columns(house_dataframe: pd.DataFrame, columns_to_drop: list[str]) -> pd.DataFrame:
     """
@@ -88,7 +106,8 @@ def drop_columns(house_dataframe: pd.DataFrame, columns_to_drop: list[str]) -> p
         Returns:
                 df (pandas.DataFrame): dataframe des données immobilières traitées
     """
-    # A COMPLETER
+    df = house_dataframe.copy()
+    return df.drop(columns_to_drop, axis=1)
 
 def to_csv(house_dataframe: pd.DataFrame, year: str, department: str) -> None:
     """
@@ -100,7 +119,9 @@ def to_csv(house_dataframe: pd.DataFrame, year: str, department: str) -> None:
         Returns:
                 None
     """
-    # A COMPLETER
+    df = house_dataframe.copy()
+    name = f"DVF_{year}_{department}_{str(date.today())}.csv"
+    df.to_csv(name, index=False)
 
 #################
 # Main function #
