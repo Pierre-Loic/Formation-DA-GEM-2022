@@ -20,6 +20,8 @@ lxml = "*"
 openpyxl = "*"
 sqlalchemy = "*"
 scikit-learn = "*"
+plotly = "*"
+statsmodels = "*"
 
 [dev-packages]
 
