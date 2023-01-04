@@ -22,6 +22,8 @@ sqlalchemy = "*"
 scikit-learn = "*"
 plotly = "*"
 statsmodels = "*"
+tensorflow = {extras = ["cpu"], version = "*"}
+scikeras = "*"
 
 [dev-packages]
 
