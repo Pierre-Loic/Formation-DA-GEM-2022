@@ -24,6 +24,7 @@ plotly = "*"
 statsmodels = "*"
 tensorflow = {extras = ["cpu"], version = "*"}
 scikeras = "*"
+pmdarima = "*"
 
 [dev-packages]
 
