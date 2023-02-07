@@ -25,6 +25,7 @@ statsmodels = "*"
 tensorflow = {extras = ["cpu"], version = "*"}
 scikeras = "*"
 pmdarima = "*"
+tensorflow-cpu = "*"
 
 [dev-packages]
 
