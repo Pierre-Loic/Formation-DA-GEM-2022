@@ -1,0 +1,2 @@
+0 masque
+1 sans_masque
